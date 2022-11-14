@@ -1,47 +1,48 @@
 import java.util.Scanner;
 
 public class Projecte {
-    private static final String MSG_1 = "Error, has introduit una lletra ";
-    private static final String MSG_2 = "id: ";
-    private static final String MSG_3 = "edat: ";
-    private static final String MSG_4 = "tipus de venda? ";
-    private static final String MSG_5 = "import de la compra ";
-    private static final String MSG_6 = "telefon: ";
-    private static final String MSG_7 = "Error, introdueix un nombre dins del rang: ";
-    private static final String MSG_8 = "Error, has fet 3 intents. ";
+    private static final String MSG_1 = "id: ";
+    private static final String MSG_2 = "edat: ";
+    private static final String MSG_3 = "tipus de venda? ";
+    private static final String MSG_4 = "import de la compra ";
+    private static final String MSG_5 = "telefon: ";
+    private static final String MSG_6 = "Error\n" ;
+    private static final Integer MAX_COUNT = 3 ;
+    private static final Integer MIN_ID = 111 ;
+    private static final Integer MAX_ID = 999 ;
 
     public static void main(String[] args) {
-        int id, edat, imporcomp, telefon, count = 0;
+        int id=0, edat=0, imporcomp, telefon, count = 0;
         boolean tipusCorrecte;
-        boolean stop = false;
-        do{
-            Scanner sc = new Scanner (System.in);
-            System.out.println(MSG_2);
+        Scanner sc = new Scanner(System.in);
+        do {
+            System.out.print(MSG_1);
             tipusCorrecte = sc.hasNextInt();
-            if (tipusCorrecte){
-                count++;
+            if (tipusCorrecte) {
                 id = sc.nextInt();
-                while ((id < 111 || id > 999) && (count != 3) && tipusCorrecte && !stop) {
-                    System.out.println(MSG_7);
-                    tipusCorrecte = sc.hasNextInt();
-                    if (tipusCorrecte){
-                        id = sc.nextInt();
-                        count++;
-                    }else {
-                        count++;
-                        tipusCorrecte = false;
-                        System.out.println(MSG_1);
-                    }
+                if (id < MIN_ID || id > MAX_ID) {
+                    System.out.print(MSG_6);
                 }
-            }else{
-                System.out.println(MSG_1);
-                count++;
+            } else {
+                System.out.print(MSG_6);
+                sc.next();
             }
-
-            if(count==3){
-                System.out.println(MSG_8);
+            count++;
+        } while ((!tipusCorrecte || id < MIN_ID || id > MAX_ID) && count < MAX_COUNT);
+        count = 0;
+        do {
+            System.out.print(MSG_2);
+            tipusCorrecte = sc.hasNextInt();
+            if (tipusCorrecte) {
+                edat = sc.nextInt();
+                if (edat < 14 || edat > 90) {
+                    System.out.print(MSG_6);
+                }
+            } else {
+                System.out.print(MSG_6);
+                sc.next();
             }
-
-        }while (!tipusCorrecte && count != 3);
+            count++;
+        } while ((!tipusCorrecte || edat < 14 || edat > 90) && count < MAX_COUNT);
     }
 }
